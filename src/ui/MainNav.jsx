@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { useEffect } from "react";
 import {
   HiOutlineCalendarDays,
   HiOutlineCog6Tooth,
@@ -8,6 +9,7 @@ import {
 } from "react-icons/hi2";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { getCabins } from "../services/apiCabins";
 
 const NavList = styled.ul`
   display: flex;
@@ -55,6 +57,9 @@ const StyledNavLink = styled(NavLink)`
 `;
 
 const MainNav = () => {
+  useEffect(() => {
+    getCabins().then((data) => console.log("data", data));
+  }, []);
   return (
     <nav>
       <NavList>
