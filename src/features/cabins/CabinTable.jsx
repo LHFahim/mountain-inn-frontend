@@ -35,7 +35,7 @@ export const CabinTable = () => {
     data: cabins,
     error,
   } = useQuery({
-    queryKey: ["cabin"],
+    queryKey: ["cabins"],
     queryFn: getCabins,
   });
 
@@ -51,7 +51,7 @@ export const CabinTable = () => {
         <div>Discount</div>
         <div></div>
       </TableHeader>
-      {cabins.items.map((cabin) => (
+      {cabins?.items.map((cabin) => (
         <CabinRow cabin={cabin} key={cabin.id} />
       ))}
     </Table>
