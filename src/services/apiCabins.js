@@ -22,14 +22,35 @@ export const getCabins = async () => {
 };
 
 export const createCabin = async (newCabin) => {
-  console.log("🚀 ~ file: apiCabins.js:25 ~ createCabin ~ newCabin:", newCabin);
   const url = `${import.meta.env.VITE_BASE_URL}/cabins`;
+  const fileUploadUrl = `${import.meta.env.VITE_BASE_URL}/cabins/upload/image`;
+
+  let imageUrl;
+
+  try {
+    const formData = new FormData();
+    formData.append("file", newCabin.image);
+
+    const response = await axios({
+      method: "POST",
+      url: fileUploadUrl,
+      data: formData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+      },
+    });
+
+    imageUrl = response.data;
+  } catch (error) {
+    console.error(error);
+  }
 
   try {
     const response = await axios({
       method: "POST",
       url,
-      data: newCabin,
+      data: { ...newCabin, image: imageUrl },
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
