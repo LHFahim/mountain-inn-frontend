@@ -1,27 +1,58 @@
-import supabase from "./supabase";
+import axios from "axios";
 
 export async function getSettings() {
-  const { data, error } = await supabase.from("settings").select("*").single();
+  const url = `${
+    import.meta.env.VITE_BASE_URL
+  }/settings?page=1&pageSize=20&sortBy=createdAt&sort=desc`;
 
-  if (error) {
+  try {
+    const response = await axios({
+      method: "GET",
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
     console.error(error);
-    throw new Error("Settings could not be loaded");
   }
-  return data;
 }
+
+export const updateSettingsApi = async (id, settingsData) => {
+  const updateUrl = `${import.meta.env.VITE_BASE_URL}/settings/${id}`;
+
+  try {
+    const response = await axios({
+      method: "PATCH",
+      url: updateUrl,
+      data: { ...settingsData },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 // We expect a newSetting object that looks like {setting: newValue}
-export async function updateSetting(newSetting) {
-  const { data, error } = await supabase
-    .from("settings")
-    .update(newSetting)
-    // There is only ONE row of settings, and it has the ID=1, and so this is the updated one
-    .eq("id", 1)
-    .single();
+// export async function updateSetting(newSetting) {
+//   const { data, error } = await supabase
+//     .from("settings")
+//     .update(newSetting)
+//     // There is only ONE row of settings, and it has the ID=1, and so this is the updated one
+//     .eq("id", 1)
+//     .single();
 
-  if (error) {
-    console.error(error);
-    throw new Error("Settings could not be updated");
-  }
-  return data;
-}
+//   if (error) {
+//     console.error(error);
+//     throw new Error("Settings could not be updated");
+//   }
+//   return data;
+// }

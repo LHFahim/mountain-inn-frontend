@@ -7,6 +7,7 @@ import Row from "../ui/Row";
 
 function Cabins() {
   const [showForm, setShowForm] = useState(false);
+
   return (
     <>
       <Row type="horizontal">
