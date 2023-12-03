@@ -29,30 +29,35 @@ export const createOrEditCabin = async (newCabin, id) => {
 
   // NOTE: if id is not available, create cabin, otherwise update cabin
   if (!id) {
-    try {
-      const formData = new FormData();
-      formData.append("file", newCabin.image);
+    if (typeof newCabin.image !== "string") {
+      try {
+        const formData = new FormData();
+        formData.append("file", newCabin.image);
 
-      const response = await axios({
-        method: "POST",
-        url: fileUploadUrl,
-        data: formData,
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
-        },
-      });
+        const response = await axios({
+          method: "POST",
+          url: fileUploadUrl,
+          data: formData,
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+          },
+        });
 
-      imageUrl = response.data;
-    } catch (error) {
-      console.error(error);
+        imageUrl = response.data;
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     try {
       const response = await axios({
         method: "POST",
         url,
-        data: { ...newCabin, image: imageUrl },
+        data: {
+          ...newCabin,
+          image: typeof newCabin.image === "string" ? newCabin.image : imageUrl,
+        },
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
