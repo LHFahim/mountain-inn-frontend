@@ -21,36 +21,83 @@ export const getCabins = async () => {
   }
 };
 
-export const createCabin = async (newCabin) => {
+export const createOrEditCabin = async (newCabin, id) => {
   const url = `${import.meta.env.VITE_BASE_URL}/cabins`;
   const fileUploadUrl = `${import.meta.env.VITE_BASE_URL}/cabins/upload/image`;
 
   let imageUrl;
 
-  try {
-    const formData = new FormData();
-    formData.append("file", newCabin.image);
+  // NOTE: if id is not available, create cabin, otherwise update cabin
+  if (!id) {
+    try {
+      const formData = new FormData();
+      formData.append("file", newCabin.image);
 
-    const response = await axios({
-      method: "POST",
-      url: fileUploadUrl,
-      data: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
-      },
-    });
+      const response = await axios({
+        method: "POST",
+        url: fileUploadUrl,
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+        },
+      });
 
-    imageUrl = response.data;
-  } catch (error) {
-    console.error(error);
+      imageUrl = response.data;
+    } catch (error) {
+      console.error(error);
+    }
+
+    try {
+      const response = await axios({
+        method: "POST",
+        url,
+        data: { ...newCabin, image: imageUrl },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  } else {
+    updateCabin(id, fileUploadUrl, newCabin);
+  }
+};
+
+export const updateCabin = async (id, fileUploadUrl, data) => {
+  const updateUrl = `${import.meta.env.VITE_BASE_URL}/cabins/${id}`;
+  let imageUrl = undefined;
+
+  if (typeof data.image !== "string") {
+    try {
+      const formData = new FormData();
+      formData.append("file", data.image);
+
+      const response = await axios({
+        method: "POST",
+        url: fileUploadUrl,
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+        },
+      });
+
+      imageUrl = response.data;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   try {
     const response = await axios({
-      method: "POST",
-      url,
-      data: { ...newCabin, image: imageUrl },
+      method: "PATCH",
+      url: updateUrl,
+      data: { ...data, image: imageUrl ? imageUrl : data.image },
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
@@ -74,6 +121,5 @@ export const deleteCabin = async (id) => {
     },
   });
 
-  console.log("🚀 response", response);
   return response;
 };
