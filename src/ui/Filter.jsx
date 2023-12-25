@@ -20,7 +20,7 @@ const FilterButton = styled.button`
     css`
       background-color: var(--color-brand-600);
       color: var(--color-brand-50);
-    `}
+    `};
 
   border-radius: var(--border-radius-sm);
   font-weight: 500;
@@ -47,15 +47,18 @@ const Filter = ({ filterField, options }) => {
 
   return (
     <StyledFilter>
-      {options.map((btn) => (
-        <FilterButton
-          key={btn.label}
-          onClick={() => handleClick(btn.value)}
-          active={btn.value === currentValue}
-        >
-          {btn.label}
-        </FilterButton>
-      ))}
+      {options.map((btn) => {
+        return (
+          <FilterButton
+            key={btn.label}
+            onClick={() => handleClick(btn.value)}
+            active={btn.value === currentValue ? "yes" : null}
+            disabled={btn.value === currentValue}
+          >
+            {btn.label}
+          </FilterButton>
+        );
+      })}
     </StyledFilter>
   );
 };
