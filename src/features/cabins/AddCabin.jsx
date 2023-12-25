@@ -6,7 +6,7 @@ import CreateCabinForm from "./CreateCabinForm";
 
 const AddCabin = () => {
   return (
-    <div>
+    <div style={{ display: "flex", gap: "10px" }}>
       <Modal>
         <Modal.Open opens="cabin-form">
           <Button>Add new cabin</Button>
@@ -14,7 +14,6 @@ const AddCabin = () => {
         <Modal.Window name="cabin-form">
           <CreateCabinForm />
         </Modal.Window>
-
         <Modal.Open opens="table">
           <Button>Show table</Button>
         </Modal.Open>
