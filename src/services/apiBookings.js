@@ -1,9 +1,16 @@
 import axios from "axios";
 
-export const getBookings = async () => {
+export const getBookings = async ({
+  filter,
+  sortBy = { field: "createdAt", direction: "desc" },
+}) => {
+  // http://localhost:5000/bookings?page=1&pageSize=20&sortBy=createdAt&sort=desc&status=CHECKED_OUT
+
   const url = `${
     import.meta.env.VITE_BASE_URL
-  }/bookings?page=1&pageSize=20&sortBy=createdAt&sort=asc`;
+  }/bookings?page=1&pageSize=20&sortBy=${sortBy.field}&sort=${
+    sortBy.direction
+  }&${filter.field}=${filter.value}`;
 
   try {
     const response = await axios({

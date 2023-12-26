@@ -1,5 +1,5 @@
-import SortBy from "../../ui/SortBy";
 import Filter from "../../ui/Filter";
+import SortBy from "../../ui/SortBy";
 import TableOperations from "../../ui/TableOperations";
 
 function BookingTableOperations() {
@@ -9,9 +9,10 @@ function BookingTableOperations() {
         filterField="status"
         options={[
           { value: "all", label: "All" },
-          { value: "checked-out", label: "Checked out" },
-          { value: "checked-in", label: "Checked in" },
-          { value: "unconfirmed", label: "Unconfirmed" },
+          { value: "CHECKED_OUT", label: "Checked out" },
+          { value: "CHECKED_IN", label: "Checked in" },
+          { value: "UNCONFIRMED", label: "Unconfirmed" },
+          { value: "NOT_ARRIVED", label: "Not arrived" },
         ]}
       />
 
