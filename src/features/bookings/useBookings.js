@@ -6,7 +6,12 @@ export function useBookings() {
   const [searchParams] = useSearchParams();
 
   const filterValue = searchParams.get("status");
-  const sortByValue = searchParams.get("sortBy");
+  let sortByValue = searchParams.get("sortBy");
+
+  if (!sortByValue) {
+    sortByValue = "startDate-desc";
+  }
+
   const [field, direction] = sortByValue.split("-");
   const sortBy = { field, direction };
 
