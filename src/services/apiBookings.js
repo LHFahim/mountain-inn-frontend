@@ -30,20 +30,24 @@ export const getBookings = async ({
   }
 };
 
-// export async function getBooking(id) {
-//   const { data, error } = await supabase
-//     .from("bookings")
-//     .select("*, cabins(*), guests(*)")
-//     .eq("id", id)
-//     .single();
+export async function getBooking(id) {
+  const url = `${import.meta.env.VITE_BASE_URL}/bookings/${id}`;
 
-//   if (error) {
-//     console.error(error);
-//     throw new Error("Booking not found");
-//   }
+  try {
+    const response = await axios({
+      method: "GET",
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+      },
+    });
 
-//   return data;
-// }
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 // // Returns all BOOKINGS that are were created after the given date. Useful to get bookings created in the last 30 days, for example.
 // export async function getBookingsAfterDate(date) {
