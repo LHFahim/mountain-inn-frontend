@@ -16,7 +16,7 @@ export const useLogin = () => {
 
         localStorage.setItem("access_token", user.access_token);
 
-        navigate("/dashboard");
+        navigate("/dashboard", { replace: true });
       }
       if (!user) {
         toast.error("Provided email or password is incorrect");

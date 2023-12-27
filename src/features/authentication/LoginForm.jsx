@@ -40,6 +40,7 @@ function LoginForm() {
           disabled={isLogging}
         />
       </FormRowVertical>
+
       <FormRowVertical label="Password">
         <Input
           type="password"

@@ -35,3 +35,9 @@ export const getMyProfile = async () => {
     console.error(error.message);
   }
 };
+
+export const accountLogout = async () => {
+  const access_token = localStorage.removeItem("access_token");
+
+  return true;
+};
