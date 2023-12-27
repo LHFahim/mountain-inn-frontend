@@ -12,7 +12,6 @@ export const useCheckout = () => {
       }),
 
     onSuccess: (data) => {
-      console.log("🚀 ~ data.id:", data.id);
       toast.success(`Booking #${data.id} successfully checked out`);
 
       queryClient.invalidateQueries({
