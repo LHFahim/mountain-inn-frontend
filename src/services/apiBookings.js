@@ -116,6 +116,34 @@ export async function updateBooking(id, obj) {
         Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
       },
     });
+    console.log(
+      "🚀 ~ file: apiBookings.js:119 ~ updateBooking ~ response:",
+      response.data
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function deleteBookingApi(id) {
+  const url = `${import.meta.env.VITE_BASE_URL}/bookings/${id}`;
+
+  try {
+    const response = await axios({
+      method: "DELETE",
+      url,
+
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+      },
+    });
+    console.log(
+      "🚀 ~ file: apiBookings.js:119 ~ updateBooking ~ response:",
+      response.data
+    );
 
     return response.data;
   } catch (error) {
