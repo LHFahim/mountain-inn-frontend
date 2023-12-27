@@ -60,7 +60,33 @@ export const getMyProfile = async () => {
 };
 
 export const accountLogout = async () => {
-  const access_token = localStorage.removeItem("access_token");
+  localStorage.removeItem("access_token");
 
   return true;
+};
+
+export const updateProfileApi = async ({
+  firstName,
+  lastName,
+  password,
+  avatar,
+}) => {
+  const url = `${import.meta.env.VITE_BASE_URL}/profile`;
+  const access_token = localStorage.getItem("access_token");
+
+  try {
+    const response = await axios({
+      method: "PATCH",
+      url,
+      data: { firstName, lastName, password, avatar },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error(error.message);
+  }
 };
