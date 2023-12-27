@@ -103,20 +103,25 @@ export async function getBooking(id) {
 //   return data;
 // }
 
-// export async function updateBooking(id, obj) {
-//   const { data, error } = await supabase
-//     .from("bookings")
-//     .update(obj)
-//     .eq("id", id)
-//     .select()
-//     .single();
+export async function updateBooking(id, obj) {
+  const url = `${import.meta.env.VITE_BASE_URL}/bookings/${id}`;
 
-//   if (error) {
-//     console.error(error);
-//     throw new Error("Booking could not be updated");
-//   }
-//   return data;
-// }
+  try {
+    const response = await axios({
+      method: "PATCH",
+      url,
+      data: obj,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 // export async function deleteBooking(id) {
 //   // REMEMBER RLS POLICIES
