@@ -116,10 +116,6 @@ export async function updateBooking(id, obj) {
         Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
       },
     });
-    console.log(
-      "🚀 ~ file: apiBookings.js:119 ~ updateBooking ~ response:",
-      response.data
-    );
 
     return response.data;
   } catch (error) {
@@ -140,10 +136,6 @@ export async function deleteBookingApi(id) {
         Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
       },
     });
-    console.log(
-      "🚀 ~ file: apiBookings.js:119 ~ updateBooking ~ response:",
-      response.data
-    );
 
     return response.data;
   } catch (error) {
