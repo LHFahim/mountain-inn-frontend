@@ -1,5 +1,28 @@
 import axios from "axios";
 
+export const registerUser = async ({
+  firstName,
+  lastName,
+  email,
+  phone,
+  password,
+  passwordConfirm,
+}) => {
+  const url = `${import.meta.env.VITE_BASE_URL}/auth/register/email`;
+
+  try {
+    const response = await axios({
+      method: "POST",
+      url,
+      data: { firstName, lastName, email, phone, password, passwordConfirm },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
 export const loginApi = async ({ email, password }) => {
   const url = `${import.meta.env.VITE_BASE_URL}/auth/login/email`;
 

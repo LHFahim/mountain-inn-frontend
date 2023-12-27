@@ -12,7 +12,7 @@ export const useLogin = () => {
 
     onSuccess: (user) => {
       if (user) {
-        queryClient.setQueriesData(["user"], user);
+        queryClient.setQueryData(["user"], user);
 
         localStorage.setItem("access_token", user.access_token);
 
