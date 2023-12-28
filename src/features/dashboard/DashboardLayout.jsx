@@ -9,15 +9,20 @@ const StyledDashboardLayout = styled.div`
 `;
 
 import React from "react";
+import { useCabins } from "../cabins/useCabins";
+import SalesChart from "./SalesChart";
 import Stats from "./Stats";
 import { useRecentBookings } from "./useRecentBookings";
 import { useRecentStays } from "./useRecentStays";
 
 const DashboardLayout = () => {
   const { recentBookings, isRecentBookingLoading } = useRecentBookings();
-  const { stays, isStaysLoading, confirmedStays } = useRecentStays();
+  const { stays, isStaysLoading, confirmedStays, numDays } = useRecentStays();
 
-  if (isRecentBookingLoading || isStaysLoading) return <Spinner />;
+  const { cabins, isLoading: isLoading3 } = useCabins();
+
+  if (isRecentBookingLoading || isStaysLoading || isLoading3)
+    return <Spinner />;
 
   return (
     <StyledDashboardLayout>
@@ -27,7 +32,7 @@ const DashboardLayout = () => {
       />
       <div>todays activity</div>
       <div>chart stay duration</div>
-      <div>chart of sales</div>
+      <SalesChart recentBookings={recentBookings.items} numDays={numDays} />
     </StyledDashboardLayout>
   );
 };

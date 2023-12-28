@@ -22,5 +22,5 @@ export const useRecentStays = () => {
     (stay) => stay.status === "CHECKED_IN" || stay.status === "CHECKED_OUT"
   );
 
-  return { stays, isStaysLoading, confirmedStays };
+  return { stays, isStaysLoading, confirmedStays, numDays };
 };
