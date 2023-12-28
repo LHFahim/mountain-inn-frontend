@@ -4,15 +4,20 @@ import { PAGE_SIZE } from "../utils/constants";
 export const getBookings = async ({
   filter,
   sortBy = { field: "createdAt", direction: "desc" },
-  page,
+  page = 1,
 }) => {
   // http://localhost:5000/bookings?page=1&pageSize=20&sortBy=createdAt&sort=desc&status=CHECKED_OUT
 
-  const url = `${
+  let url = `${
     import.meta.env.VITE_BASE_URL
   }/bookings?page=${page}&pageSize=${PAGE_SIZE}&sortBy=${sortBy.field}&sort=${
     sortBy.direction
-  }&${filter.field}=${filter.value}`;
+  }`;
+
+  filter.forEach((item) => {
+    const temp = `&${item.field}=${item.value}`;
+    url = url + temp;
+  });
 
   try {
     const response = await axios({

@@ -7,7 +7,6 @@ export const useRegister = () => {
     mutationFn: registerUser,
 
     onSuccess: (user) => {
-      console.log("🚀 ~ file: useRegister.js:10 ~ useRegister ~ user:", user);
       toast.success("Account has been successfully created!");
     },
   });
