@@ -10,6 +10,7 @@ const StyledDashboardLayout = styled.div`
 
 import React from "react";
 import { useCabins } from "../cabins/useCabins";
+import { DurationChart } from "./DurationChart";
 import SalesChart from "./SalesChart";
 import Stats from "./Stats";
 import { useRecentBookings } from "./useRecentBookings";
@@ -31,7 +32,7 @@ const DashboardLayout = () => {
         confirmedStays={confirmedStays}
       />
       <div>todays activity</div>
-      <div>chart stay duration</div>
+      <DurationChart confirmedStays={confirmedStays} stays={stays.items} />
       <SalesChart recentBookings={recentBookings.items} numDays={numDays} />
     </StyledDashboardLayout>
   );
