@@ -19,13 +19,15 @@ export const getBookings = async ({
     url = url + temp;
   });
 
+  const access_token = localStorage.getItem("access_token");
+
   try {
     const response = await axios({
       method: "GET",
       url,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+        Authorization: `Bearer ${access_token}`,
       },
     });
 
@@ -37,6 +39,7 @@ export const getBookings = async ({
 
 export async function getBooking(id) {
   const url = `${import.meta.env.VITE_BASE_URL}/bookings/${id}`;
+  const access_token = localStorage.getItem("access_token");
 
   try {
     const response = await axios({
@@ -44,7 +47,7 @@ export async function getBooking(id) {
       url,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+        Authorization: `Bearer ${access_token}`,
       },
     });
 
@@ -110,6 +113,7 @@ export async function getBooking(id) {
 
 export async function updateBooking(id, obj) {
   const url = `${import.meta.env.VITE_BASE_URL}/bookings/${id}`;
+  const access_token = localStorage.getItem("access_token");
 
   try {
     const response = await axios({
@@ -118,7 +122,7 @@ export async function updateBooking(id, obj) {
       data: obj,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+        Authorization: `Bearer ${access_token}`,
       },
     });
 
@@ -130,6 +134,7 @@ export async function updateBooking(id, obj) {
 
 export async function deleteBookingApi(id) {
   const url = `${import.meta.env.VITE_BASE_URL}/bookings/${id}`;
+  const access_token = localStorage.getItem("access_token");
 
   try {
     const response = await axios({
@@ -138,7 +143,7 @@ export async function deleteBookingApi(id) {
 
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+        Authorization: `Bearer ${access_token}`,
       },
     });
 

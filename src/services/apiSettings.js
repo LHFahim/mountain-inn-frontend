@@ -5,13 +5,15 @@ export async function getSettings() {
     import.meta.env.VITE_BASE_URL
   }/settings?page=1&pageSize=20&sortBy=createdAt&sort=desc`;
 
+  const access_token = localStorage.getItem("access_token");
+
   try {
     const response = await axios({
       method: "GET",
       url,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+        Authorization: `Bearer ${access_token}`,
       },
     });
 
@@ -24,6 +26,8 @@ export async function getSettings() {
 export const updateSettingsApi = async (id, settingsData) => {
   const updateUrl = `${import.meta.env.VITE_BASE_URL}/settings/${id}`;
 
+  const access_token = localStorage.getItem("access_token");
+
   try {
     const response = await axios({
       method: "PATCH",
@@ -31,7 +35,7 @@ export const updateSettingsApi = async (id, settingsData) => {
       data: { ...settingsData },
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+        Authorization: `Bearer ${access_token}`,
       },
     });
 

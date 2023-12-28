@@ -5,13 +5,15 @@ export const getCabins = async () => {
     import.meta.env.VITE_BASE_URL
   }/cabins?page=1&pageSize=20&sortBy=createdAt&sort=asc`;
 
+  const access_token = localStorage.getItem("access_token");
+
   try {
     const response = await axios({
       method: "GET",
       url,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+        Authorization: `Bearer ${access_token}`,
       },
     });
 
@@ -26,6 +28,7 @@ export const createOrEditCabin = async (newCabin, id) => {
   const fileUploadUrl = `${import.meta.env.VITE_BASE_URL}/cabins/upload/image`;
 
   let imageUrl;
+  const access_token = localStorage.getItem("access_token");
 
   // NOTE: if id is not available, create cabin, otherwise update cabin
   if (!id) {
@@ -40,7 +43,7 @@ export const createOrEditCabin = async (newCabin, id) => {
           data: formData,
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+            Authorization: `Bearer ${access_token}`,
           },
         });
 
@@ -60,7 +63,7 @@ export const createOrEditCabin = async (newCabin, id) => {
         },
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+          Authorization: `Bearer ${access_token}`,
         },
       });
 
@@ -77,6 +80,8 @@ export const updateCabin = async (id, fileUploadUrl, data) => {
   const updateUrl = `${import.meta.env.VITE_BASE_URL}/cabins/${id}`;
   let imageUrl = undefined;
 
+  const access_token = localStorage.getItem("access_token");
+
   if (typeof data.image !== "string") {
     try {
       const formData = new FormData();
@@ -88,7 +93,7 @@ export const updateCabin = async (id, fileUploadUrl, data) => {
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+          Authorization: `Bearer ${access_token}`,
         },
       });
 
@@ -105,7 +110,7 @@ export const updateCabin = async (id, fileUploadUrl, data) => {
       data: { ...data, image: imageUrl ? imageUrl : data.image },
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+        Authorization: `Bearer ${access_token}`,
       },
     });
 
@@ -117,12 +122,14 @@ export const updateCabin = async (id, fileUploadUrl, data) => {
 
 export const deleteCabin = async (id) => {
   const url = `${import.meta.env.VITE_BASE_URL}/cabins/${id}`;
+  const access_token = localStorage.getItem("access_token");
+
   const response = await axios({
     method: "DELETE",
     url,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+      Authorization: `Bearer ${access_token}`,
     },
   });
 
